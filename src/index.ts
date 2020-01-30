@@ -25,6 +25,7 @@ app.delete('/user/:id', User.delete);
 app.post('/user/registration', User.create);
 //Dialogs
 app.get('/dialogs/:id', Dialog.index);
+app.delete('/dialogs/:id', Dialog.delete);
 app.post('/dialogs', Dialog.create);
 
 
