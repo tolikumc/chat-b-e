@@ -2,12 +2,13 @@ import mongoose from 'mongoose';
 import express from 'express';
 import bodyParser from "body-parser";
 
-import {UserController, DialogController} from "./controllers";
+import {UserController, DialogController, MessageController} from "./controllers";
 
 const app = express();
 
 const User = new UserController();
 const Dialog = new DialogController();
+const Messages = new MessageController();
 
 app.use(bodyParser.urlencoded({extended: false}));//multipart form data для форми
 app.use(bodyParser.json());
@@ -27,6 +28,10 @@ app.post('/user/registration', User.create);
 app.get('/dialogs/:id', Dialog.index);
 app.delete('/dialogs/:id', Dialog.delete);
 app.post('/dialogs', Dialog.create);
+//message
+app.get('/messages', Messages.index);
+app.delete('/messages', Messages.delete);
+app.post('/messages', Messages.create);
 
 
 app.listen(3000, function () {

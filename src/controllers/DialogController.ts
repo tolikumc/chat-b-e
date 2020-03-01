@@ -1,5 +1,5 @@
 import express from 'express';
-import {DialogModel} from "../models";
+import {DialogModel, MessageModel} from "../models";
 
 class DialogController {
     //all dialogs
@@ -17,6 +17,7 @@ class DialogController {
                 return res.json(dialogs)
             })
     }
+
     //create dialog
     create(req: express.Request, res: express.Response) {
         const postData = {
@@ -25,8 +26,18 @@ class DialogController {
         };
         const dialog = new DialogModel(postData);
 
-        dialog.save().then((obj: object) => {
-            res.json(obj)
+        dialog.save().then((dialogObj: any) => {
+            const message = new MessageModel({
+                text: req.body.text,
+                dialog: dialogObj._id,
+                user: req.body.author
+            });
+
+            message.save().then(() => {
+                res.json(dialogObj);
+            }).catch((err: any) => {
+                res.json(err)
+            })
         }).catch((err: any) => {
             res.json(err)
         })

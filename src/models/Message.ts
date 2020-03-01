@@ -1,24 +1,40 @@
 import mongoose, {Schema, Document} from 'mongoose';
 
-interface IMessage extends Document{
-    email: string,
-    fullName: string,
-    password: string,
-    confirmed: boolean,
-    avatar: string,
-    confirm_hash: string,
-    last_seen: Date
+interface IMessage extends Document {
+    user:{
+        type: Schema.Types.ObjectId,
+        required: boolean
+    }
+    text: {
+        type: string,
+        required: boolean,
+        ref: string
+    },
+    unread: {
+        type: boolean,
+        default: boolean
+    },
+    dialog: {
+        type: Schema.Types.ObjectId,
+        ref: string,
+        required: boolean
+    }
 }
 
 
 const MessageSchema = new Schema({
-    author: String,
-    partner: String,
-    text: String,
-    dialog: String,
-    unread: Boolean,
-
-
+    user:{
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+    },
+    text: {type: String, required: true},
+    unread: {type: false, default: false},
+    dialog: {
+        type: Schema.Types.ObjectId,
+        ref: 'Dialog',
+        required: true
+    }
 }, {
     timestamps: true
 });
