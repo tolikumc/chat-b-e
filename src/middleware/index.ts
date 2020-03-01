@@ -1,0 +1,1 @@
+export {default as updateLastSeen} from './update-lastSeen';

@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import express from 'express';
 import bodyParser from "body-parser";
+import {updateLastSeen} from './middleware';
 
 import {UserController, DialogController, MessageController} from "./controllers";
 
@@ -12,6 +13,7 @@ const Messages = new MessageController();
 
 app.use(bodyParser.urlencoded({extended: false}));//multipart form data для форми
 app.use(bodyParser.json());
+app.use(updateLastSeen);
 
 mongoose.connect('mongodb://localhost:27017/chat', {
     useNewUrlParser: true,

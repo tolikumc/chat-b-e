@@ -19,7 +19,10 @@ const UserSchema = new Schema({
     confirmed: {type: Boolean, default: false},
     confirmed_hash: String,
     avatar: String,
-    last_seen: Date
+    last_seen: {
+        type: Date,
+        default: new Date()
+    }
 
 }, {
     timestamps: true
